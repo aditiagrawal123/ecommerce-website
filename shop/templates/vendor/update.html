@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"
+    style="margin: 3%;">Update</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data">
+            
+            <div class="mb-3">
+              <label for="product-name" class="col-form-label">product name:</label>
+              <input type="text" class="form-control" name="product-name" value="{{to_upd.name}}">
+            </div>
+            <div class="mb-3">
+               
+                  <label for="inputFile">Select product image to upload:</label>
+                  <input type="file" name="fileToUpload" value="{{to_upd.data}}">
+                  
+                  
+                
+            </div>
+            <div class="mb-3">
+              <label for="price" class="col-form-label">price:</label>
+              <input type="number" class="form-control" name="price" value="{{to_upd.price}}">
+            </div>
+            <div class="mb-3">
+              <label for="product-description" class="col-form-label">product-description:</label>
+              <input type="text" class="form-control" name="product-description" value="{{to_upd.desc}}">
+            </div>
+            <div class="mb-3">
+              <label for="brand">Brand:</label>
+                  <select name="brand"  id="brand" class="form-control" required >
+                      
+                    <option value="{{to_upd.brand}}">{{to_upd.brand}}</option>
+                   {% for brand in brand %}
+                   <option value="{{brand.name}}">{{brand.name}}</option>
+                   {% endfor %}
+                   
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="category">Category:</label>
+                      <select name="category"   id="category" class="form-control" required >
+                          
+                       <option value="{{to_upd.category}}">{{to_upd.category}}</option>
+                       {% for category in category %}
+                       <option value="{{category.name}}">{{category.name}}</option>
+                       {% endfor %}
+                       
+                      </select>
+                    </div>
+            <input type="Submit" value="Update">
+          </form>
+        </div>
+        <div class="modal-footer">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{% endblock body %}

@@ -1,0 +1,130 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"
+    style="margin: 3%;">+ Add product</button>
+    
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add product</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data">
+             
+              <div class="mb-3">
+                <label for="product-name" class="col-form-label">product name:</label>
+                <input type="text" class="form-control" name="product-name">
+              </div>
+              <div class="mb-3">
+                 
+                    <label for="inputFile">Select product image to upload:</label>
+                    <input type="file" name="fileToUpload" >
+                    
+                    
+                  
+              </div>
+              <div class="mb-3">
+                <label for="price" class="col-form-label">price:</label>
+                <input type="number" class="form-control" name="price">
+              </div>
+              <div class="mb-3">
+                <label for="product-description" class="col-form-label">product-description:</label>
+                <input type="text" class="form-control" name="product-description">
+              </div>
+              <div class="mb-3">
+                <label for="brand">Add a brand</label>
+                    <select name="brand" id="brand" class="form-control" required>
+                      <option value=""> Select A brand</option>
+                        
+
+                     {% for brand in brand %}
+                     <option value="{{brand.name}}">{{brand.name}}</option>
+                     {% endfor %}
+                     
+                    </select>
+                    
+             
+              <div class="mb-3">
+                <label for="category">Add a category</label>
+                    <select name="category" id="category" class="form-control" required>
+                    {% if getproduct %}
+                      <option value="{{getproduct.category_id}}" style="display: none;">{{getproduct.category.name}}</option>
+                      {% for category in category %}
+                      <option value="{{category.name}}">{{category.name}}</option>
+                      {% endfor %}
+                     {% else %}
+                     <option value=""> Select A category</option>
+                     {% for category in category %}
+                     <option value="{{category.name}}">{{category.name}}</option>
+                     {% endfor %}
+                     {% endif %}
+                    </select>
+              </div>
+              <input type="Submit" value="Submit">
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+    <div style="width: 90%;">
+      {% if table|length==0 %}
+      <div class="alert alert-dark" role="alert" style="margin: 3%;">
+        Add your first product!
+      </div>
+        {% else %}
+        
+      
+       
+            
+      
+        <table class="table" style="margin: 2% 3% 2% 3%; padding-right: 3%;">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Product-name</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Price</th>
+                <th scope="col">Description</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Category</th>
+                
+                <th scope="col">Actions</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+                {% for product in table %}
+                {% if product.vendor_id==vendor_id %}
+                  
+                
+                <tr>
+                    <th scope="row">{{product.id}}</th>
+                    <td>{{product.name}}</td>
+                    <td><img src="data:image/png;base64,{{product.rendered_data}}" width="100px" height="50px"/></td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.desc}}</td>
+                    <td>{{product.brand}}</td>
+                    <td>{{product.category}}</td>
+                    
+                    <td>
+                      <a href="/update/{{product.id}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Update</button>
+                      <a href="/delete/{{product.id}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Delete</button>
+                    </td>
+                  </tr>
+                {% endif %}  
+                {% endfor %}
+              
+              
+            </tbody>
+          </table>
+          {% endif %}
+    </div>
+
+
+    {% endblock body %}
